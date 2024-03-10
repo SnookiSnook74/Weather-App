@@ -16,53 +16,56 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                // MARK: - Backgound Color
-                Color.background
-                    .ignoresSafeArea()
-                
-                // MARK: - Background Image
-                Image("Background")
-                    .resizable()
-                    .ignoresSafeArea()
-                
-                // MARK: - House Image
-                Image("House")
-                    .frame(maxHeight: .infinity,alignment: .top)
-                    .padding(.top, 257)
-                
-                VStack(spacing: -10) {
-                    Text("Челябинск")
-                        .font(.largeTitle)
+            GeometryReader { geometry in
+                let screenHeight = geometry.size.height + geometry.safeAreaInsets.top + geometry.safeAreaInsets.bottom
+                ZStack {
+                    // MARK: - Backgound Color
+                    Color.background
+                        .ignoresSafeArea()
                     
-                    VStack {
+                    // MARK: - Background Image
+                    Image("Background")
+                        .resizable()
+                        .ignoresSafeArea()
+                    
+                    // MARK: - House Image
+                    Image("House")
+                        .frame(maxHeight: .infinity,alignment: .top)
+                        .padding(.top, 257)
+                    
+                    VStack(spacing: -10) {
+                        Text("Челябинск")
+                            .font(.largeTitle)
                         
-                        Text(attributedString)
-                        
-                        Text("H:24°   L:18°")
-                            .font(.title3.weight(.semibold))
+                        VStack {
+                            
+                            Text(attributedString)
+                            
+                            Text("H:24°   L:18°")
+                                .font(.title3.weight(.semibold))
+                        }
+                        Spacer()
                     }
-                    Spacer()
+                    .padding(.top, 51)
+                    
+                    // MARK: - Botton Sheet
+                    
+                    .sheetPlus(isPresented: $isPresented, background: Color.bottomSheetBackground.cornerRadius(44), onDrag: { translation in
+                        positionSheet = translation / screenHeight
+                 
+            
+                    }) {
+                        ForecastView()
+                            .frame(height: 700)
+                            .presentationDetentsPlus([.height(350), .fraction(0.6), .medium, .fraction(1)], selection: $selectedDetent
+                            )
+                    }
+                    
+                    // MARK: - Tab Bar
+                    TabBar(action: {
+                        selectedDetent = .fraction(1)
+                    })
                 }
-                .padding(.top, 51)
-                
-                // MARK: - Botton Sheet
-                
-                .sheetPlus(isPresented: $isPresented, background: Color.bottomSheetBackground.cornerRadius(44), onDrag: { translation in
-                    positionSheet = translation
-             
-        
-                }) {
-                    ForecastView()
-                        .frame(height: 700)
-                        .presentationDetentsPlus([.height(350), .fraction(0.6), .medium, .fraction(1)], selection: $selectedDetent
-                        )
-                }
-                
-                // MARK: - Tab Bar
-                TabBar(action: {
-                    selectedDetent = .fraction(1)
-                })
             }
             .toolbar(.hidden)
         }
