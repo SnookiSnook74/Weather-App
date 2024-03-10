@@ -9,7 +9,8 @@ import SwiftUI
 import BottomSheet
 
 struct HomeView: View {
-   // @StateObject var setting = SheetSettings()
+    @State private var isPresented = true
+    @State private var selectedDetent: BottomSheet.PresentationDetent = .medium
 
     var body: some View {
         NavigationStack {
@@ -45,12 +46,19 @@ struct HomeView: View {
                 
                 // MARK: - Botton Sheet
                 
-           
+                .sheetPlus(isPresented: $isPresented, background: Color.bottomSheetBackground.cornerRadius(44)) {
+                    ForecastView()
+                        .frame(width: 50)
+                        .presentationDetentsPlus([.height(400), .fraction(0.6), .medium, .fraction(1)], selection: $selectedDetent
+                        )
+                }
                 
                 // MARK: - Tab Bar
-                TabBar(action: {})
+                TabBar(action: {
+                    selectedDetent = .fraction(1)
+                })
             }
-        
+            .toolbar(.hidden)
         }
     }
     
