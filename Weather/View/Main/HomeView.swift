@@ -48,8 +48,8 @@ struct HomeView: View {
                 
                 .sheetPlus(isPresented: $isPresented, background: Color.bottomSheetBackground.cornerRadius(44)) {
                     ForecastView()
-                        .frame(width: 50)
-                        .presentationDetentsPlus([.height(400), .fraction(0.6), .medium, .fraction(1)], selection: $selectedDetent
+                        .frame(height: 850)
+                        .presentationDetentsPlus([.height(350), .fraction(0.6), .medium, .fraction(1)], selection: $selectedDetent
                         )
                 }
                 

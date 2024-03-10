@@ -10,10 +10,21 @@ import SwiftUI
 struct ForecastView: View {
     var body: some View {
         ScrollView {
-            
         }
+        .backgroundBlur(radius: 25, opaque: true)
         .background(Color.bottomSheetBackground)
         .clipShape(RoundedRectangle(cornerRadius: 44))
+        .overlay {
+            RoundedRectangle(cornerRadius: 44)
+                .stroke(Color.bottomSheetBorderMiddle, lineWidth: 1)
+                .blendMode(.overlay)
+                .offset(y: 1)
+                .blur(radius: 0)
+                .mask {
+                    RoundedRectangle(cornerRadius: 44)
+                }
+              
+        }
         .overlay {
             Divider()
                 .blendMode(.overlay)
