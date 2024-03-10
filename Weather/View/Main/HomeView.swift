@@ -11,6 +11,8 @@ import BottomSheet
 struct HomeView: View {
     @State private var isPresented = true
     @State private var selectedDetent: BottomSheet.PresentationDetent = .medium
+    @State var positionSheet: CGFloat = 0
+
 
     var body: some View {
         NavigationStack {
@@ -46,9 +48,13 @@ struct HomeView: View {
                 
                 // MARK: - Botton Sheet
                 
-                .sheetPlus(isPresented: $isPresented, background: Color.bottomSheetBackground.cornerRadius(44)) {
+                .sheetPlus(isPresented: $isPresented, background: Color.bottomSheetBackground.cornerRadius(44), onDrag: { translation in
+                    positionSheet = translation
+             
+        
+                }) {
                     ForecastView()
-                        .frame(height: 850)
+                        .frame(height: 700)
                         .presentationDetentsPlus([.height(350), .fraction(0.6), .medium, .fraction(1)], selection: $selectedDetent
                         )
                 }
