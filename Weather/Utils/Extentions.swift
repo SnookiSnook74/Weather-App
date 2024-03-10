@@ -27,3 +27,18 @@ extension View {
             .background(Blur(radius: radius, opaque: opaque))
     }
 }
+
+extension View {
+    func innderShadow<S:Shape, SS: ShapeStyle>(shape: S, color: SS, lineWigdth: CGFloat = 1, offsetX: CGFloat = 0, offsetY: CGFloat = 0, blur: CGFloat = 4, blendMode: BlendMode = .normal, opacity: Double = 1) -> some View {
+        return self
+            .overlay {
+                shape
+                    .stroke(color, lineWidth: lineWigdth)
+                    .blendMode(blendMode)
+                    .offset(x: offsetX, y: offsetY)
+                    .blur(radius: blur)
+                    .mask(shape)
+                    .opacity(opacity)
+            }
+    }
+}
