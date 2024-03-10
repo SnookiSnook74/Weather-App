@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import BottomSheet
 
 struct HomeView: View {
+   // @StateObject var setting = SheetSettings()
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -21,7 +24,6 @@ struct HomeView: View {
                     .ignoresSafeArea()
                 
                 // MARK: - House Image
-                
                 Image("House")
                     .frame(maxHeight: .infinity,alignment: .top)
                     .padding(.top, 257)
@@ -41,9 +43,14 @@ struct HomeView: View {
                 }
                 .padding(.top, 51)
                 
+                // MARK: - Botton Sheet
+                
+           
+                
                 // MARK: - Tab Bar
                 TabBar(action: {})
             }
+        
         }
     }
     

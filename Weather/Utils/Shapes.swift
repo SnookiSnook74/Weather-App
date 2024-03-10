@@ -23,7 +23,7 @@ struct Arc: Shape {
 }
 
 
-struct MyIcon: Shape {
+struct Trapeson: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
         let width = rect.size.width
