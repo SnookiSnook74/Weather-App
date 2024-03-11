@@ -43,7 +43,7 @@ struct HomeView: View {
                         .padding(.top, 385)
                         .offset(y: -bottomSheetTranlationProperty * imageIfSet)
                     
-                    VStack(spacing: -10) {
+                    VStack(spacing: -10 * (1 - bottomSheetTranlationProperty)) {
                         Text("Челябинск")
                             .font(.largeTitle)
                         
@@ -57,6 +57,7 @@ struct HomeView: View {
                         Spacer()
                     }
                     .padding(.top, 51)
+                    .offset(y: -bottomSheetTranlationProperty * 46)
                     
                     // MARK: - Botton Sheet
                     
@@ -76,6 +77,7 @@ struct HomeView: View {
                     TabBar(action: {
                         selectedDetent = .fraction(1)
                     })
+                    .offset(y: bottomSheetTranlationProperty * 115)
                 }
             }
             .toolbar(.hidden)
