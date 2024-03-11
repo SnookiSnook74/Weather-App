@@ -8,16 +8,24 @@
 import SwiftUI
 import BottomSheet
 
+enum BottomSheetPosition:CGFloat, CaseIterable {
+    case top = 0.83
+    case middle = 0.385
+}
+
 struct HomeView: View {
     @State private var isPresented = true
-    @State private var selectedDetent: BottomSheet.PresentationDetent = .medium
-    @State var positionSheet: CGFloat = 0
-
+    @State private var selectedDetent: BottomSheet.PresentationDetent = .fraction(BottomSheetPosition.middle.rawValue)
+    @State var bottomSheetTraslation : CGFloat = BottomSheetPosition.middle.rawValue
+    var bottomSheetTranlationProperty: CGFloat {
+        (bottomSheetTraslation - BottomSheetPosition.middle.rawValue) / (BottomSheetPosition.top.rawValue - BottomSheetPosition.middle.rawValue)
+    }
 
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
                 let screenHeight = geometry.size.height + geometry.safeAreaInsets.top + geometry.safeAreaInsets.bottom
+                let imageIfSet = screenHeight + 36
                 ZStack {
                     // MARK: - Backgound Color
                     Color.background
@@ -27,11 +35,13 @@ struct HomeView: View {
                     Image("Background")
                         .resizable()
                         .ignoresSafeArea()
+                        .offset(y: -bottomSheetTranlationProperty * imageIfSet)
                     
                     // MARK: - House Image
                     Image("House")
                         .frame(maxHeight: .infinity,alignment: .top)
-                        .padding(.top, 257)
+                        .padding(.top, 385)
+                        .offset(y: -bottomSheetTranlationProperty * imageIfSet)
                     
                     VStack(spacing: -10) {
                         Text("Челябинск")
@@ -51,13 +61,14 @@ struct HomeView: View {
                     // MARK: - Botton Sheet
                     
                     .sheetPlus(isPresented: $isPresented, background: Color.bottomSheetBackground.cornerRadius(44), onDrag: { translation in
-                        positionSheet = translation / screenHeight
+                        bottomSheetTraslation = translation / screenHeight
+                       // print(bottomSheetTranlationProperty.formatted())
                  
             
                     }) {
                         ForecastView()
                             .frame(height: 700)
-                            .presentationDetentsPlus([.height(350), .fraction(0.6), .medium, .fraction(1)], selection: $selectedDetent
+                            .presentationDetentsPlus([.height(385), .fraction(0.6), .medium, .fraction(1)], selection: $selectedDetent
                             )
                     }
                     
