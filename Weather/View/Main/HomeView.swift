@@ -67,15 +67,16 @@ struct HomeView: View {
                         bottomSheetTraslation = translation / screenHeight
                        // print(bottomSheetTranlationProperty.formatted())
                         
-                        if selectedDetent == BottomSheet.PresentationDetent.fraction(0.9) {
-                            
-                            hasDrag = true
-                        } else {
-                            hasDrag = false
+                        withAnimation(.easeInOut) {
+                            if selectedDetent == BottomSheet.PresentationDetent.fraction(0.9) {
+                                hasDrag = true
+                            } else {
+                                hasDrag = false
+                            }
                         }
             
                     }) {
-                        ForecastView()
+                        ForecastView(bottomSheetTraslationProerty: bottomSheetTranlationProperty)
                             .frame(height: 600)
                             .presentationDetentsPlus([.height(385), .fraction(0.6), .medium, .fraction(0.9)], selection: $selectedDetent
                             )
